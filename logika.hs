@@ -18,6 +18,8 @@ nwd (x,y) = if y == 0
                then x
                else nwd(y,(x`mod`y))
 
+data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show)
+
 maks :: [Integer] -> Integer
 maks [] = 0
 maks (x:xs)
