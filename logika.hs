@@ -18,13 +18,32 @@ nwd (x,y) = if y == 0
                then x
                else nwd(y,(x`mod`y))
 
-data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show)
-
 maks :: [Integer] -> Integer
 maks [] = 0
 maks (x:xs)
   | x > maks xs = x
   | otherwise = maks xs
+
+data Tree a = Empty
+            | Node a (Tree a) (Tree a)
+            deriving (Eq,Ord,Show,Read)
+
+atree = Node 5 (Node 3 (Node 2 Empty Empty) (Node 4 Empty Empty)) (Node 7 (Node 6 Empty Empty) (Node 9 Empty (Node 23 Empty Empty)))
+
+sumTree :: Num a => Tree a -> a
+sumTree Empty = 0
+sumTree (Node n t1 t2) = n + sumTree t1 + sumTree t2
+
+--depth :: a => Tree a -> Num a
+depth Empty = 0
+depth (Node n t1 t2) = 1 + (max (depth t1) (depth t2))
+
+-- binSearch :: Num a => Tree -> Integer -> Bool
+binSearch Empty _ = False
+binSearch (Node x t1 t2) y
+                      | x == y = True
+                      | x > y = binSearch t1 y
+                      | x < y = binSearch t2 y
 
 listadd :: [Integer] -> [Integer] -> [Integer]
 listadd [] xs = xs
