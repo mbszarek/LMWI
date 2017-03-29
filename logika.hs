@@ -45,6 +45,10 @@ binSearch (Node x t1 t2) y
                       | x > y = binSearch t1 y
                       | x < y = binSearch t2 y
 
+--preorder :: a => Tree a -> [a]
+preorder Empty = []
+preorder (Node x t1 t2) = [x] ++ preorder t1 ++ preorder t2
+
 listadd :: [Integer] -> [Integer] -> [Integer]
 listadd [] xs = xs
 listadd xs [] = xs
