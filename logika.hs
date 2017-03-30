@@ -34,18 +34,18 @@ sumTree :: Num a => Tree a -> a
 sumTree Empty = 0
 sumTree (Node n t1 t2) = n + sumTree t1 + sumTree t2
 
---depth :: a => Tree a -> Num a
+depth :: Tree a -> Integer
 depth Empty = 0
 depth (Node n t1 t2) = 1 + (max (depth t1) (depth t2))
 
--- binSearch :: Num a => Tree -> Integer -> Bool
+binSearch ::(Integral a)=>Tree a -> a -> Bool
 binSearch Empty _ = False
 binSearch (Node x t1 t2) y
                       | x == y = True
                       | x > y = binSearch t1 y
                       | x < y = binSearch t2 y
 
---preorder :: a => Tree a -> [a]
+preorder :: (Integral a) => Tree a -> [a]
 preorder Empty = []
 preorder (Node x t1 t2) = [x] ++ preorder t1 ++ preorder t2
 
@@ -67,12 +67,16 @@ insort xs = insertt y (insort ys)
     y = head xs
     ys = tail xs
 
+compose :: (a->b)->(b->c)->(a->c)
 compose f g = (\x -> g (f x))
 
+curry :: ((a,b)->c)->(a->b->c)
 curry f a b = f (a,b)
 
+uncurry :: (a->b->c)->((a,b)->c)
 uncurry f (a,b) = f a b
 
+multifun :: (a->a)->Integer->(a->a)
 multifun f 1 = (\x -> f x)
 multifun f n = compose f (multifun f (n-1))
 
@@ -81,15 +85,19 @@ ltake xs 0 = []
 ltake [] i = []
 ltake (x:xs) i = [x] ++ (ltake xs (i-1))
 
+--lall :: (a->Bool)->[a]->Bool
 lall f (x:xs) = if f head
                    then lall f (tail xs)
                    else False
 
+lmap :: (a->a)->[a]->[a]
 lmap f xs = [f x | x<-xs]
 
+lrev :: [a]->[a]
 lrev [] = []
 lrev xs = [last xs] ++ (lrev (init xs))
 
+lzip :: [a] -> [b] -> [(a,b)]
 lzip xs [] = []
 lzip [] ys = []
 lzip (x:xs) (y:ys) = [(x,y)] ++ (lzip xs ys)
