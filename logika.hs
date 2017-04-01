@@ -46,9 +46,9 @@ insort xs = insertt y (insort ys)
 
 compose f g = (\x -> g (f x))
 
-curry f a b = f (a,b)
+_curry f a b = f (a,b)
 
-uncurry f (a,b) = f a b
+_uncurry f (a,b) = f a b
 
 multifun f 1 = (\x -> f x)
 multifun f n = compose f (multifun f (n-1))
@@ -82,3 +82,5 @@ cartprod :: [a] -> [a] -> [(a,a)]
 cartprod [] ys = []
 cartprod xs [] = []
 cartprod xs ys = [(x,y) | x<-xs, y<-ys]
+
+dodawaj (x,y) = x + y
